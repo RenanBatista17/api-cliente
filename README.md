@@ -1,2 +1,2 @@
 # api-cliente
-API completa com NODEJS + TypeScript e MongoDB
+API completa para cadastro de clientes com NODEJS + TypeScript e MongoDB
