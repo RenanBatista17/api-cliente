@@ -36,7 +36,26 @@ export default function App(){
       email: emailRef.current?.value
     })
 
-    console.log(response.data);
+    setCustomers(allCustomers => [...allCustomers, response.data])
+    
+// Caso queira limpar os campos
+    // nameRef.current.value = ""
+    // emailRefRef.current.value = ""
+  }
+
+  async function handleDelete(id: string) {
+      try{
+        await api.delete("/customer", {
+          params:{
+          id: id,
+          }
+        })
+
+        const allCustomers = customers.filter((customer) => customer.id !== id)
+        setCustomers(allCustomers)
+      }catch(err){
+        console.log(err);
+      }
   }
 
   return(
@@ -56,7 +75,7 @@ export default function App(){
                       <p><span className="font-medium">Nome:</span> {customer.name}</p>
                       <p><span className="font-medium">E-mail:</span> {customer.email}</p>
                       <p><span className="font-medium">Status:</span> {customer.status ? "Ativo" : "INATIVO"}</p>
-                      <button className='bg-red-500 w-7 h-7 flex items-center justify-center rounded-lg absolute right-0 -top-2'>
+                      <button className='bg-red-500 w-7 h-7 flex items-center justify-center rounded-lg absolute right-0 -top-2' onClick={ () => handleDelete(customer.id)}>
                         <FiTrash size={18} color='#FFF'/>
                       </button>
                     </article>
